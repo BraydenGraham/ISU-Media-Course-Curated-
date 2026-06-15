@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Why Indigenous Voices Matter in Education</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F5EFE0;
+      --warm-white: #FAF7F2;
+      --ochre: #C8861A;
+      --ochre-light: #E8A832;
+      --charcoal: #1E1A16;
+      --brown-mid: #3D2B1F;
+      --brown-light: #7A5C44;
+      --rust: #8B3A1A;
+      --sage: #5C6B52;
+      --sand: #D4B896;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--charcoal);
+      color: var(--cream);
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(30, 26, 22, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200, 134, 26, 0.2);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ochre-light);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.25rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--sand);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+      padding: 0.45rem 1rem;
+    }
+
+    .nav-links a:hover { color: var(--ochre-light); }
+
+    /* ── SOURCES MODAL ── */
+    .sources-btn {
+      background: transparent;
+      border: 1px solid rgba(200,134,26,0.5);
+      color: var(--ochre-light);
+      padding: 0.45rem 1.1rem;
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+    .sources-btn:hover { background: var(--ochre); color: var(--charcoal); }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10,8,6,0.85);
+      backdrop-filter: blur(8px);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal-box {
+      background: var(--brown-mid);
+      border: 1px solid rgba(200,134,26,0.25);
+      max-width: 720px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 3rem;
+      position: relative;
+      animation: fadeUp 0.4s ease;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1.2rem; right: 1.5rem;
+      background: none;
+      border: none;
+      color: var(--sand);
+      font-size: 1.5rem;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    .modal-close:hover { color: var(--ochre-light); }
+
+    .modal-box h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-box .modal-sub {
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ochre);
+      margin-bottom: 2rem;
+      display: block;
+    }
+
+    .ref-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .ref-list li {
+      font-size: 0.9rem;
+      color: var(--sand);
+      line-height: 1.75;
+      padding-left: 2rem;
+      text-indent: -2rem;
+      border-bottom: 1px solid rgba(200,134,26,0.08);
+      padding-bottom: 1.25rem;
+    }
+
+    .ref-list li:last-child { border-bottom: none; padding-bottom: 0; }
+    .ref-list em { color: var(--cream); font-style: italic; }
+    .ref-list a { color: var(--ochre-light); text-decoration: underline; text-underline-offset: 3px; transition: color 0.2s; }
+    .ref-list a:hover { color: var(--cream); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 4rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 50%, rgba(200,134,26,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 10% 80%, rgba(139,58,26,0.12) 0%, transparent 60%);
+    }
+
+    .hero-circle {
+      position: absolute;
+      right: 6%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      border: 1px solid rgba(200,134,26,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-circle::before {
+      content: '';
+      position: absolute;
+      inset: 20px;
+      border-radius: 50%;
+      border: 1px solid rgba(200,134,26,0.10);
+    }
+
+    .hero-circle::after {
+      content: '';
+      position: absolute;
+      inset: 60px;
+      border-radius: 50%;
+      border: 1px solid rgba(200,134,26,0.07);
+    }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--ochre);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.3s;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      max-width: 700px;
+      color: var(--cream);
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.5s;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--ochre-light);
+    }
+
+    .hero-sub {
+      margin-top: 2rem;
+      max-width: 500px;
+      color: var(--sand);
+      font-size: 1.05rem;
+      line-height: 1.75;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.75s;
+    }
+
+    .hero-cta {
+      margin-top: 3rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--ochre);
+      color: var(--charcoal);
+      padding: 0.9rem 2rem;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: background 0.3s, gap 0.3s;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 1s;
+    }
+
+    .hero-cta:hover { background: var(--ochre-light); gap: 1.2rem; }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--ochre), transparent);
+      margin: 0 4rem;
+      opacity: 0.3;
+    }
+
+    /* ── INTRO BAND ── */
+    .intro-band {
+      background: var(--brown-mid);
+      padding: 5rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .intro-band .label {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      font-style: italic;
+      color: var(--ochre);
+      line-height: 1;
+    }
+
+    .intro-band p {
+      color: var(--cream);
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.85;
+    }
+
+    /* ── REASONS ── */
+    .reasons {
+      padding: 7rem 4rem;
+      background: var(--charcoal);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--ochre);
+      border: 1px solid rgba(200,134,26,0.3);
+      padding: 0.35rem 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-header h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--cream);
+    }
+
+    .reasons-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .reason-card {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 3rem;
+      padding: 4rem 0;
+      border-bottom: 1px solid rgba(200,134,26,0.12);
+      align-items: start;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reason-card.visible { opacity: 1; transform: translateY(0); }
+    .reason-card:first-child { border-top: 1px solid rgba(200,134,26,0.12); }
+
+    .reason-number {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 4rem;
+      font-weight: 900;
+      font-style: italic;
+      color: rgba(200,134,26,0.2);
+      line-height: 1;
+      padding-top: 0.2rem;
+    }
+
+    .reason-body h3 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 1rem;
+      line-height: 1.25;
+    }
+
+    .reason-body .accent-line {
+      width: 3rem;
+      height: 2px;
+      background: var(--ochre);
+      margin-bottom: 1.25rem;
+    }
+
+    .reason-body p {
+      color: var(--sand);
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.85;
+      max-width: 680px;
+    }
+
+    .reason-example {
+      margin-top: 1.5rem;
+      padding: 1.25rem 1.5rem;
+      border-left: 2px solid var(--ochre);
+      background: rgba(200,134,26,0.06);
+    }
+
+    .reason-example .ex-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--ochre);
+      margin-bottom: 0.5rem;
+    }
+
+    .reason-example p {
+      font-size: 0.92rem;
+      color: var(--cream);
+      font-style: italic;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      padding: 7rem 4rem;
+      background: var(--brown-mid);
+      text-align: center;
+    }
+
+    .cta-section h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      color: var(--cream);
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-section p {
+      max-width: 600px;
+      margin: 0 auto 3rem;
+      color: var(--sand);
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+
+    .cta-pills {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 0.7rem 1.8rem;
+      border: 1px solid rgba(200,134,26,0.4);
+      color: var(--ochre-light);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 2rem;
+      font-family: 'Source Serif 4', Georgia, serif;
+      text-decoration: none;
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+      cursor: pointer;
+    }
+
+    .pill:hover {
+      background: var(--ochre);
+      color: var(--charcoal);
+      border-color: var(--ochre);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #111009;
+      padding: 3rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(200,134,26,0.1);
+    }
+
+    footer p {
+      font-size: 0.78rem;
+      color: rgba(212,184,150,0.4);
+      letter-spacing: 0.05em;
+    }
+
+    .footer-mark {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 0.85rem;
+      color: var(--ochre);
+      font-style: italic;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { padding: 7rem 1.5rem 4rem; }
+      .hero-circle { display: none; }
+      .intro-band { grid-template-columns: 1fr; padding: 3rem 1.5rem; gap: 2rem; }
+      .reasons { padding: 4rem 1.5rem; }
+      .reason-card { grid-template-columns: 1fr; gap: 0.5rem; }
+      .reason-number { font-size: 2.5rem; }
+      .cta-section { padding: 4rem 1.5rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+      .divider { margin: 0 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">Indigenous Voices in Education</div>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#reasons">The Case</a></li>
+        <li><a href="#reflect">Reflect</a></li>
+      </ul>
+      <button class="sources-btn" onclick="document.getElementById('sourcesModal').classList.add('open')">Sources</button>
+    </div>
+  </nav>
+
+  <!-- SOURCES MODAL -->
+  <div class="modal-overlay" id="sourcesModal" onclick="if(event.target===this)this.classList.remove('open')">
+    <div class="modal-box">
+      <button class="modal-close" onclick="document.getElementById('sourcesModal').classList.remove('open')">&times;</button>
+      <h2>References</h2>
+      <ul class="ref-list">
+        <li>Truth and Reconciliation Commission of Canada. <em><a href="https://www.trc.ca/assets/pdf/Calls_to_Action_English2.pdf" target="_blank" rel="noopener">Calls to Action</a></em>. TRC, 2015.</li>
+        <li>Indigenous Peoples and Communities. <em><a href="www.rcaanc-cirnac.gc.ca/eng/1100100013785/1529102490303" target="_blank" rel="noopener">Crown-Indigenous Relations and Northern Affairs Canada, Government of Canada</a></em>. 13 June 2024 </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-circle"></div>
+    <p class="hero-eyebrow">Media Campaign &nbsp;·&nbsp; ISU Project</p>
+    <h1>Why <em>Indigenous Voices</em><br/>Must Be Centred<br/>in Education</h1>
+    <p class="hero-sub">A focused course on Indigenous perspectives is both a supplement to learning, as well as a correction. Here are five reasons why it matters deeply, urgently, and for all of us.</p>
+    <a href="#reasons" class="hero-cta">Explore the Reasons &nbsp;→</a>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- INTRO BAND -->
+  <section class="intro-band">
+    <div class="label">The<br/>Why</div>
+    <p>For generations, Indigenous histories, knowledges, and experiences have been excluded, distorted, or erased from mainstream Canadian education. A dedicated course that centres Indigenous voices is about adding content and about dismantling a long tradition of silence and beginning the work of genuine understanding, reconciliation, and respect.</p>
+  </section>
+
+  <!-- REASONS -->
+  <section class="reasons" id="reasons">
+    <div class="section-header">
+      <div class="section-tag">Five Key Reasons</div>
+      <h2>The Significance of This Course</h2>
+    </div>
+
+    <div class="reasons-grid">
+
+      <div class="reason-card">
+        <div class="reason-number">01</div>
+        <div class="reason-body">
+          <h3>Correcting a History of Erasure</h3>
+          <div class="accent-line"></div>
+          <p>Standard curricula have long centred European perspectives, often presenting colonisation as progress and omitting the violence, forced assimilation, and cultural destruction it caused. A course focused on Indigenous voices provides a counter-narrative that is historically accurate and morally necessary.</p>
+          <div class="reason-example">
+            <div class="ex-label">Specific Example</div>
+            <p>The residential school system operated in Canada from the 1880s until 1996, yet for decades it appeared in few classrooms. Works like <em>Smoke Signals</em> and survivor testimonies, now studied in courses like this, give voice to experiences that textbooks buried.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reason-card">
+        <div class="reason-number">02</div>
+        <div class="reason-body">
+          <h3>Building Empathy Across Difference</h3>
+          <div class="accent-line"></div>
+          <p>Literature and storytelling are among the most powerful tools for developing empathy. When students read, listen to, and engage with Indigenous voices on their own terms, not filtered through a colonial lens, they develop a richer, more nuanced understanding of what it means to live a life shaped by dispossession, resilience, and cultural continuity.</p>
+          <div class="reason-example">
+            <div class="ex-label">Specific Example</div>
+            <p>The short texts <em>"Take Us To Your Chief"</em> and <em>"The Boy in the Ditch"</em> introduce readers to Indigenous voices and experiences that defy easy categorisation. Engaging with these stories prompts students to confront assumptions and develop a more honest understanding of what Indigenous life looks like today: complex, contemporary, and deeply human.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reason-card">
+        <div class="reason-number">03</div>
+        <div class="reason-body">
+          <h3>Supporting the Calls to Action of the TRC</h3>
+          <div class="accent-line"></div>
+          <p>Canada's Truth and Reconciliation Commission released 94 Calls to Action in 2015, with several directly addressing education. Call to Action #62 specifically calls for age-appropriate curricula on residential schools, treaties, and Indigenous contributions. A course focused on Indigenous voices is a direct, meaningful response to this national imperative.</p>
+          <div class="reason-example">
+            <div class="ex-label">Specific Example</div>
+            <p>TRC Call to Action #64 calls on educators to build student capacity for inter-cultural understanding. This course, by immersing students in Indigenous texts and perspectives, answers that call in a concrete and sustained way, not a single lesson, but a full semester of engagement.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reason-card">
+        <div class="reason-number">04</div>
+        <div class="reason-body">
+          <h3>Honouring Knowledge Systems That Precede Colonisation</h3>
+          <div class="accent-line"></div>
+          <p>Indigenous peoples hold sophisticated, centuries-old knowledge systems about land stewardship, community, spirituality, and law that mainstream education has treated as inferior or irrelevant. This course creates space to encounter those systems with respect, and to question the assumption that Western knowledge is the only valid framework for understanding the world.</p>
+          <div class="reason-example">
+            <div class="ex-label">Specific Example</div>
+            <p>Waubgeshig Rice's <em>Moon of the Crusted Snow</em> centres an Anishinaabe community whose traditional knowledge of the land and collective ways of living become essential to survival when modern systems collapse. Students encounter a worldview in which community, reciprocity, and relationship to the land are not relics of the past, but living frameworks of understanding.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reason-card">
+        <div class="reason-number">05</div>
+        <div class="reason-body">
+          <h3>Creating Space for Unlearning, Not Just Learning</h3>
+          <div class="accent-line"></div>
+          <p>Perhaps most significantly, this course does something rare in formal education: it asks students to critically examine what they have already been taught. "Unlearning", the process of questioning inherited assumptions, stereotypes, and silences, is essential to meaningful reconciliation and to becoming an informed, ethical citizen in a settler-colonial society.</p>
+          <div class="reason-example">
+            <div class="ex-label">Specific Example</div>
+            <p>Many students arrive believing that colonisation is something that "happened in the past." The documentary <em>Colonization Road</em> directly confronts this assumption, tracing how colonial structures are embedded in the streets, place names, and institutions of present-day Canada. That shift in understanding — from history to ongoing reality — is what this course is built to produce.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="reflect">
+    <div class="section-tag" style="display:inline-block; font-size:0.7rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--ochre); border:1px solid rgba(200,134,26,0.3); padding:0.35rem 1rem; margin-bottom:1.5rem;">Take It Further</div>
+    <h2 id="act">Begin Your Own Unlearning</h2>
+    <p>This course is a beginning, not an end. Reconciliation is an ongoing practice, one that requires curiosity, discomfort, and commitment. Click any topic below to explore further:</p>
+    <div class="cta-pills">
+      <a class="pill" href="https://www.rcaanc-cirnac.gc.ca/eng/1524494530110/1557511412801" target="_blank" rel="noopener">TRC 94 Calls to Action</a>
+      <a class="pill" href="https://www.un.org/development/desa/indigenouspeoples/declaration-on-the-rights-of-indigenous-peoples.html" target="_blank" rel="noopener">UNDRIP</a>
+      <a class="pill" href="https://www.mmiwg-ffada.ca/final-report/" target="_blank" rel="noopener">MMIWG Inquiry Report</a>
+      <a class="pill" href="https://native-land.ca/" target="_blank" rel="noopener">Land Acknowledgement Practices</a>
+      <a class="pill" href="https://www.fncaringsociety.com/resources" target="_blank" rel="noopener">Indigenous Authors &amp; Artists</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>ISU Media Campaign by: Brayden Graham &nbsp;·&nbsp; Grade 11 Indigenous Voices Course - NBE 3C1 &nbsp;·&nbsp; 2025–26</p>
+    <div class="footer-mark">Every voice counts. Every silence costs.</div>
+  </footer>
+
+  <script>
+    const cards = document.querySelectorAll('.reason-card');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), 100);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    cards.forEach(card => observer.observe(card));
+  </script>
+
+</body>
+</html>
